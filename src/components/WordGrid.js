@@ -6,14 +6,15 @@ const WordGrid = ({
   targetWord,
   currentAttempt,
   setAttempts,
+  isGameFinished,
 }) => {
-const initialLettersValues = {
+  const initialLettersValues = {
     0: "",
     1: "",
     2: "",
     3: "",
     4: "",
-  }
+  };
   const [letters, setLetters] = useState(initialLettersValues);
 
   const lettersList = Object.values(letters);
@@ -30,10 +31,10 @@ const initialLettersValues = {
     //eslint-disable-next-line
   }, [letters]);
 
-  useEffect(()=>{
+  useEffect(() => {
     setLetters(initialLettersValues);
     //eslint-disable-next-line
-  }, [targetWord])
+  }, [targetWord]);
 
   const handleLetterChange = async (index, value) => {
     setLetters((currentLetters) => ({
@@ -43,17 +44,22 @@ const initialLettersValues = {
   };
 
   const getCellStyles = (letter, index) => {
-    const isAttemptCompleted = attemptIndex < currentAttempt;
-    const isIncluded = isAttemptCompleted && targetWord.toLocaleLowerCase().includes(letter?.toLocaleLowerCase());
+    const isAttemptCompleted = isGameFinished
+      ? true
+      : attemptIndex < currentAttempt;
+    const isIncluded =
+      isAttemptCompleted &&
+      targetWord.toLocaleLowerCase().includes(letter?.toLocaleLowerCase());
     const isCorrectIndex =
       isAttemptCompleted &&
-      targetWord[index].toLocaleLowerCase() === word[index]?.toLocaleLowerCase();
+      targetWord[index].toLocaleLowerCase() ===
+        word[index]?.toLocaleLowerCase();
 
     if (isIncluded && isCorrectIndex) {
       return "text-bg-success";
     }
     if (isIncluded) {
-      return "text-bg-warning";
+      return "text-bg-warning"
     }
     if (isAttemptCompleted) {
       return "text-bg-dark";
@@ -66,12 +72,15 @@ const initialLettersValues = {
       {lettersList.map((letter, index) => (
         <input
           type="text"
-          className={`${getCellStyles(letter, index)} col border border-2 rounded`}
+          className={`${getCellStyles(
+            letter,
+            index
+          )} col border border-2 rounded`}
           key={index}
           maxLength={1}
           value={letter}
           onChange={(e) => handleLetterChange(index, e.target.value)}
-          disabled={attemptIndex !== currentAttempt}
+          disabled={isGameFinished ? true : attemptIndex !== currentAttempt}
         />
       ))}
     </div>

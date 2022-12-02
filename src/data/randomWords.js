@@ -24,7 +24,6 @@ const randomWords = [
   "GATOS",
   "HOJAS",
   "HOGAR",
-  "HORNO",
   "IGUAL",
   "IDEAL",
   "IDEAS",

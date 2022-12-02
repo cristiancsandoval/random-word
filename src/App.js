@@ -15,6 +15,7 @@ function App() {
     5: "",
   };
   const [attempts, setAttempts] = useState(initialAttemptsValues);
+  const [isGameFinished, setIsGameFinished] = useState(false);
 
   const words = Object.values(attempts);
 
@@ -29,18 +30,22 @@ function App() {
     setAttempts(initialAttemptsValues);
     setCurrentAttempt(0);
     setTargetWord(getRandomWord());
+    setIsGameFinished(false);
   };
 
   const updateAttempt = () => {
     if (currentAttempt === 5) {
       if (verifyWord()) {
         alert("¡Correcto!");
+        setIsGameFinished(true);
       }else{
         alert(`Juego terminado. La palabra correcta era ${targetWord}`);
+        setIsGameFinished(true);
       }
     } else {
       if (verifyWord()) {
         alert("¡Correcto!");
+        setIsGameFinished(true);
       }
       setCurrentAttempt((previousAttempt) => previousAttempt + 1);
     }
@@ -58,6 +63,7 @@ function App() {
             targetWord={targetWord}
             currentAttempt={currentAttempt}
             setAttempts={setAttempts}
+            isGameFinished={isGameFinished}
           />
         ))}
       </div>
