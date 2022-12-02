@@ -27,10 +27,12 @@ const initialLettersValues = {
 
   useEffect(() => {
     updateAttempts();
+    //eslint-disable-next-line
   }, [letters]);
 
   useEffect(()=>{
     setLetters(initialLettersValues);
+    //eslint-disable-next-line
   }, [targetWord])
 
   const handleLetterChange = async (index, value) => {
